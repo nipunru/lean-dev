@@ -68,29 +68,6 @@ After running `npx lean-dev init --tool claude-code`, type `/lean-dev` in Claude
 6. **Use .claudeignore** — exclude node_modules, build artifacts, lock files
 7. **Load only what you need** — don't dump all docs at session start
 
-## Development Phases
-
-### Phase 1 — MVP
-
-- [x] CLI with `init` command
-- [x] Claude Code templates (lean-dev.md, CLAUDE.md, .claudeignore, STACK.md, ARCHITECTURE.md)
-- [x] Auto-detect project type for .claudeignore generation
-- [x] README
-
-### Phase 2 — Multi-tool
-
-- [x] Cursor templates
-- [x] GitHub Copilot templates
-- [x] Codex / AGENTS.md templates
-- [x] `--all` flag
-
-### Phase 3 — Polish
-
-- [ ] `update` command (fetch latest from npm)
-- [ ] Broader project type detection (Python, Go, Rust, Java, PHP, Ruby)
-- [ ] Publish to npm
-- [ ] Community contributions guide
-
 ## License
 
-MIT
+Apache 2.0

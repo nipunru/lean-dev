@@ -1,0 +1,32 @@
+{
+  "name": "lean-dev",
+  "version": "0.1.0",
+  "description": "Universal AI dev efficiency toolkit — reduce token usage across Claude Code, Cursor, Copilot, and Codex",
+  "type": "module",
+  "bin": {
+    "lean-dev": "./bin/lean-dev.js"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "templates/"
+  ],
+  "dependencies": {
+    "commander": "^12.1.0",
+    "inquirer": "^9.3.7"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "claude-code",
+    "cursor",
+    "copilot",
+    "codex",
+    "ai",
+    "tokens",
+    "developer-tools",
+    "efficiency"
+  ],
+  "license": "MIT"
+}

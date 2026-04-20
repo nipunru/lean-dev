@@ -1,0 +1,38 @@
+---
+description: lean-dev — token and context efficiency rules
+globs:
+  - "**/*"
+alwaysApply: true
+---
+
+# lean-dev Efficiency Rules
+
+## Model Tiers
+
+| Task | Model |
+|------|-------|
+| File search, grep, read | Fastest available |
+| Planning, analysis | Mid-tier |
+| Writing, editing code | Mid-tier |
+| Complex refactor, architecture | Most capable |
+
+## Session Rules
+
+- One task per conversation — start a new chat when switching context
+- Reference files by path and line number, not by description
+- Don't explore broadly — read only the files needed for the task
+- After significant changes, start a fresh conversation
+
+## Response Style
+
+- Concise — skip explanations the user didn't ask for
+- No trailing summaries of what you just did
+- Cite `file:line` instead of quoting long code blocks already in context
+- Don't add features, cleanup, or abstractions beyond the request
+
+## Code Conventions
+
+- No comments explaining what the code does
+- Match the style of the file being edited
+- No error handling for impossible scenarios
+- No backwards-compatibility shims unless explicitly asked

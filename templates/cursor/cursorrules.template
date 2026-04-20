@@ -1,0 +1,30 @@
+# lean-dev rules for Cursor
+
+## Model Usage
+
+Match the model to the task:
+- File search, grep, read-only tasks: use the fastest/cheapest model
+- Planning and analysis: use the mid-tier model
+- Writing and editing code: use the mid-tier model
+- Complex refactors and architecture decisions: use the most capable model
+
+## Session Discipline
+
+- One task per conversation
+- Start a new chat when switching to an unrelated task
+- Prefer specific file:line references over broad exploration
+- After significant changes, start a fresh conversation
+
+## Response Style
+
+- Keep responses focused on the task at hand
+- No unnecessary explanations or summaries
+- Reference specific files and line numbers
+- Don't re-read files already in context
+
+## Code Style
+
+- Match existing patterns in the file being edited
+- No comments explaining what the code does
+- No features, refactors, or abstractions beyond what was asked
+- No error handling for scenarios that can't happen

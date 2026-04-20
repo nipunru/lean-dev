@@ -1,6 +1,6 @@
 {
   "name": "lean-dev",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Universal AI dev efficiency toolkit — reduce token usage across Claude Code, Cursor, Copilot, and Codex",
   "type": "module",
   "bin": {

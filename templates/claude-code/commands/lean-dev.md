@@ -1,56 +1,98 @@
-Display this menu and wait for the user to choose an option:
+You are running in lean-dev mode. Always be concise. Short answers only unless the user asks to explain. No emojis. No preamble. No restating the question. Lead with the answer.
 
----
-
-**lean-dev** — token-efficient session manager
+Display this menu and wait for the user to pick an option:
 
 ```
-[IG] Generate / update .claudeignore
+lean-dev
+
+[IG] Generate / update agent ignore (eg: .claudeignore)
+[ST] Generate STACK.md and ARCHITECTURE.md
 [MD] Restructure CLAUDE.md
-[ST] Load STACK.md into context
-[AR] Load ARCHITECTURE.md into context
-[CM] Compact session (focused)
+[CM] Compact session
 [LD] Start lean dev session
-[HK] Show token-saving tips
+[HK] How to use lean-dev
+
+Tip: run IG → ST → MD to set up context, then LD to start working.
 ```
 
 ---
 
-When the user picks an option, execute the corresponding action:
+## [IG] Generate / update agent ignore
 
-**[IG]** Inspect the project root to detect the project type, then generate or update `.claudeignore` with appropriate exclusions. Show the user what was added or changed.
+Use Haiku. Scan the project root for files and folders. Build a candidate ignore list.
 
-**[MD]** Read `CLAUDE.md`. Suggest a restructured version that is shorter and more token-efficient, keeping only what Claude strictly needs: stack pointer, conventions, key files. Present the diff.
+For common, unambiguous artifacts (node_modules, dist, .git, *.log, .env) — add silently.
 
-**[ST]** Read `.claude/docs/STACK.md` and summarize its contents. Ask the user if anything needs updating.
+For anything uncertain, ask the user before adding. One question at a time. Examples:
+- "Ignore Docker files? (Dockerfile, docker-compose.yml)"
+- "Ignore CI config? (.github/workflows/)"
+- "Ignore test snapshots? (__snapshots__/)"
+- "Ignore migration files? (migrations/)"
 
-**[AR]** Read `.claude/docs/ARCHITECTURE.md` and summarize its contents. Ask the user if anything needs updating.
-
-**[CM]** Tell the user: "Run `/compact Focus on code changes only` to compact this session and reduce context size."
-
-**[LD]** Ask: "What is the one task for this session?" Once the user answers, load only the files relevant to that task. State which model tier you will use for each step (Haiku for reads, Sonnet for writes). Confirm the task scope before starting.
-
-**[HK]** Display the token-saving tips section below, then ask if the user wants to start a lean session.
+After all questions, write the final `.claudeignore` (or equivalent for the active tool) and list what was added.
 
 ---
 
-## Token-Saving Tips
+## [ST] Generate STACK.md and ARCHITECTURE.md
 
-1. **One task per session** — run `/clear` when switching context
-2. **Use model tiers** — Haiku for search/read, Sonnet for writing, Opus for architecture
-3. **Reference files explicitly** — `src/auth/login.ts:42` beats "find the login function"
-4. **Compact after big changes** — `/compact Focus on code changes only`
-5. **Keep CLAUDE.md lean** — point to docs, not inline everything
-6. **Use .claudeignore** — exclude node_modules, build artifacts, lock files
-7. **Load only what you need** — don't dump all docs at session start
+Use Haiku. Scan the project to detect the stack and structure. Read: package.json / go.mod / Cargo.toml / pyproject.toml / composer.json / Gemfile (whichever exist). List top-level directories.
+
+Ask the user:
+- "Update STACK.md, ARCHITECTURE.md, or both?"
+
+Then generate only what was chosen. Write factual, short entries. No placeholders — only include what was actually detected. If something is unclear, ask one targeted question.
+
+Write to `.claude/docs/STACK.md` and/or `.claude/docs/ARCHITECTURE.md`.
 
 ---
 
-## Always-Active Session Rules
+## [MD] Restructure CLAUDE.md
 
-- Use Haiku for file search, grep, and read-only tasks
-- Use Sonnet for writing and editing code
-- Use Opus only for complex architecture decisions
-- After significant changes, prompt: "Consider running `/compact Focus on code changes only`"
-- Prefer specific file:line references over broad codebase exploration
-- Suggest `/clear` when the user switches to a new unrelated task
+Read `CLAUDE.md`. Identify anything verbose, redundant, or not directly useful to an AI coding assistant. Propose a leaner version. Show only the diff. Ask before writing.
+
+---
+
+## [CM] Compact session
+
+Tell the user: Run `/compact Focus on code changes only`
+
+---
+
+## [LD] Start lean dev session
+
+Ask: "What is the one task for this session?"
+
+Once answered: load only the files needed. State the model tier for each step. Do not load STACK.md or ARCHITECTURE.md unless the task requires it. Confirm scope, then start.
+
+---
+
+## [HK] How to use lean-dev
+
+```
+Recommended setup order:
+  1. /lean-dev → IG   generate ignore file
+  2. /lean-dev → ST   scan and generate STACK.md + ARCHITECTURE.md
+  3. /lean-dev → MD   tighten CLAUDE.md
+  4. /lean-dev → LD   start working
+
+During a session:
+  - LD     start a focused task
+  - CM     compact when context gets large
+  - /clear start fresh for a new task
+
+Model tiers (baked into all configs):
+  search / read     → Haiku
+  write / edit      → Sonnet
+  architecture      → Opus
+```
+
+---
+
+## Always-Active Rules
+
+- Haiku for file search, grep, read-only tasks
+- Sonnet for writing and editing code
+- Opus only for complex architecture decisions
+- After significant changes: "Run `/compact Focus on code changes only`"
+- Specific file:line references over broad exploration
+- Suggest `/clear` when the user switches to an unrelated task

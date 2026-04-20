@@ -5,7 +5,12 @@ dist/
 build/
 .next/
 *.lock
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
 *.min.js
+*.min.css
+*.map
 coverage/
 
 # common
@@ -17,3 +22,19 @@ coverage/
 .env
 .env.local
 !.env.example
+
+# binaries and media
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.pdf
+*.zip
+*.woff
+*.woff2
+*.ttf
+*.csv
+
+# lean-dev session files (local only)
+_lean_dev_sessions/

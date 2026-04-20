@@ -20,6 +20,20 @@ npx lean-dev init --tool codex
 npx lean-dev init --all
 ```
 
+### Update existing files
+
+```bash
+npx lean-dev update
+```
+
+Prompts you to select which files to overwrite. Useful after a new lean-dev release.
+
+```bash
+npx lean-dev update --tool claude-code   # specific tool
+npx lean-dev update --all                # all tools
+npx lean-dev init --force                # overwrite everything, no prompts
+```
+
 ## What it does
 
 Copies lean configuration templates into your project:

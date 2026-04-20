@@ -17,10 +17,13 @@ You are running in lean-dev mode.
 - Never read a file you already have in context.
 
 **Model switching**
-- Before lightweight tasks (search, read, scan, grep): output `Switch to Haiku. Press Enter to continue, C + Enter to skip.` Wait.
-- Before write/edit tasks: output `Switch to Sonnet. Press Enter to continue, C + Enter to skip.` Wait.
-- Before architecture/complex decisions: output `Switch to Opus. Press Enter to continue, C + Enter to skip.` Wait.
-- If user types C (any case), proceed without switching.
+- Track the active model. At session start (LD), ask: `Current model? h / s / o` — store the answer as active_model.
+- Before a task, determine the required model tier (Haiku=read/scan, Sonnet=write/edit, Opus=architecture).
+- Only prompt if required model ≠ active_model. Never prompt if already on the right model.
+- Prompt format: `Switch to [model]. C to continue, X to cancel.` Wait for response.
+  - C (any case) → proceed. Update active_model to the new model.
+  - X (any case) → cancel switch, proceed with current model. Do not update active_model.
+  - Anything else → treat as C.
 
 **Proactive compaction**
 - Count exchanges mentally. After 8 back-and-forths, output: `Context is filling. Run /compact Focus on [current task] to stay lean.`
@@ -61,7 +64,7 @@ Tip: run ST → IG → LD to start. Run SS to save session state.
 
 ## [IG] Generate / update agent ignore
 
-`Switch to Haiku. Press Enter to continue, C + Enter to skip.` Wait.
+`Switch to Haiku. C to continue, X to cancel.` Wait. Only output this if active_model ≠ Haiku.
 
 Scan the project root. Add silently: node_modules, dist, build, .git, *.log, .env, *.lock, package-lock.json, yarn.lock, pnpm-lock.yaml, coverage, __pycache__, target, vendor, *.map, *.min.js, *.min.css, *.png, *.jpg, *.pdf, *.zip, *.csv, *.woff, *.ttf.
 
@@ -78,7 +81,7 @@ Write `.claudeignore`. List what was added in one line.
 
 ## [ST] Generate STACK.md and ARCHITECTURE.md
 
-`Switch to Haiku. Press Enter to continue, C + Enter to skip.` Wait.
+`Switch to Haiku. C to continue, X to cancel.` Wait. Only output this if active_model ≠ Haiku.
 
 Read whichever exist: `package.json`, `go.mod`, `Cargo.toml`, `pyproject.toml`, `composer.json`, `Gemfile`, `pom.xml`. List top-level directories. Detect runtime, frameworks, deps, dev tools, test runner, db.
 
@@ -127,9 +130,9 @@ Silently load `.claude/docs/STACK.md` and `.claude/docs/ARCHITECTURE.md` if not 
 Ask: `Task?`
 
 Once answered:
-- Read-only / search / investigation → `Switch to Haiku. Press Enter to continue, C + Enter to skip.`
-- Write / edit / fix → `Switch to Sonnet. Press Enter to continue, C + Enter to skip.`
-- Architecture / large refactor → `Switch to Opus. Press Enter to continue, C + Enter to skip.`
+- Read-only / search / investigation → if active_model ≠ Haiku: `Switch to Haiku. C to continue, X to cancel.`
+- Write / edit / fix → if active_model ≠ Sonnet: `Switch to Sonnet. C to continue, X to cancel.`
+- Architecture / large refactor → if active_model ≠ Opus: `Switch to Opus. C to continue, X to cancel.`
 
 Wait for response. Then ask: `Which files? (or Enter to let me find them)`
 

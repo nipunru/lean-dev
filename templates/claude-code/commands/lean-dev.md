@@ -134,9 +134,9 @@ Once answered:
 - Write / edit / fix → if active_model ≠ Sonnet: `Switch to Sonnet. C to continue, X to cancel.`
 - Architecture / large refactor → if active_model ≠ Opus: `Switch to Opus. C to continue, X to cancel.`
 
-Wait for response. Then ask: `Which files? (or Enter to let me find them)`
+Wait for response. Then ask: `Which files? (type paths, or C to let me find them)`
 
-If user provides files — load only those. If not — use Haiku to locate the relevant files first, then confirm before loading.
+If user provides files — load only those. If user types C — use Haiku to locate the relevant files, list them, then wait for confirmation before loading.
 
 Start. Count exchanges. Prompt compact at 8.
 
